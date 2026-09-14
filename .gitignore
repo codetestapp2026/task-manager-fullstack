@@ -1,0 +1,63 @@
+# ========================================
+# DEPENDENCIES
+# ========================================
+task-manager-api/node_modules/
+task-manager-frontend/node_modules/
+
+# ========================================
+# ENVIRONMENT VARIABLES
+# ========================================
+.env
+.env.*
+task-manager-api/.env
+task-manager-api/.env.*
+task-manager-frontend/.env
+task-manager-frontend/.env.*
+
+# Allow example environment files
+!.env.example
+!task-manager-api/.env.example
+!task-manager-frontend/.env.example
+
+# ========================================
+# NEXT.JS
+# ========================================
+task-manager-frontend/.next/
+task-manager-frontend/out/
+
+# ========================================
+# TEST COVERAGE
+# ========================================
+task-manager-api/coverage/
+task-manager-frontend/coverage/
+
+# ========================================
+# BUILDS
+# ========================================
+task-manager-api/build/
+task-manager-frontend/build/
+dist/
+
+# ========================================
+# LOGS
+# ========================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ========================================
+# VERCEL
+# ========================================
+.vercel/
+task-manager-frontend/.vercel/
+
+# ========================================
+# SYSTEM
+# ========================================
+.DS_Store
+
+# ========================================
+# TYPESCRIPT
+# ========================================
+*.tsbuildinfo
