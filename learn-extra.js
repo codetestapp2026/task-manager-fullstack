@@ -23280,10 +23280,9 @@ Check again.
 Then:
 
 git commit -m "Initial Task Manager full-stack project"
+
 Step 20 — Create new GitHub repository
-
 Example name:
-
 task-manager-fullstack
 
 Then from the main folder:
@@ -23303,11 +23302,11 @@ GitHub
 task-manager-fullstack
 ├── task-manager-api
 └── task-manager-frontend
+
+
 PHASE 7 — Deploy Express backend to Render
 Step 21 — Create Render account
-
 Connect your new GitHub account.
-
 Create:
 
 New
@@ -23315,6 +23314,7 @@ New
 Web Service
 ↓
 task-manager-fullstack
+
 Step 22 — Configure backend directory
 
 Render:
@@ -23325,27 +23325,21 @@ task-manager-api
 Build command:
 
 npm ci
-
 Start command:
-
 npm start
-
 Your package already has:
-
 "start": "node server.js"
+
 Step 23 — Production environment variables
 
 Local backend uses:
-
 task-manager-api/.env
-
 Production uses:
 
 Render
 → Environment Variables
 
 Concept:
-
 LOCAL
 .env
 
@@ -23353,10 +23347,9 @@ PRODUCTION
 Render environment variables
 
 This covers:
-
 ✅ Production environment variables
-Step 24 — MongoDB Atlas
 
+Step 24 — MongoDB Atlas
 You are keeping your existing Atlas account.
 
 Architecture:
@@ -23373,62 +23366,47 @@ This covers:
 
 ✅ MongoDB Atlas
 ✅ Database connection
+
 Step 25 — Deploy Express
-
 Render deploys:
-
 task-manager-api
-
 You'll get something similar to:
-
 https://task-manager-api-xxxx.onrender.com
-
 Test:
-
 /
-
 and:
-
 /api/health
-
 This covers:
-
 ✅ Deploy Express
+
 Step 26 — HTTPS
 
 Local:
-
 http://localhost:3000
 
 Production:
-
 https://your-app.onrender.com
 
 This covers:
-
 ✅ HTTPS
+
 Step 27 — Test production API
-
 Use Postman against the Render URL.
-
 Test:
-
 signup
 login
 refresh
 logout
 tasks
 profile image
+
 Step 28 — Production logs
-
 Open:
-
 Render
 → Web Service
 → Logs
 
 Look for:
-
 Server started
 MongoDB connected
 requests
@@ -23436,9 +23414,9 @@ warnings
 errors
 
 This completes:
-
 ✅ Logs
 ✅ Production errors
+
 PHASE 8 — Redis + BullMQ worker
 Step 29 — Production Redis
 
@@ -23448,9 +23426,7 @@ REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
 
 That means:
-
 Redis on MY computer
-
 Render cannot use your computer's 127.0.0.1.
 
 Production needs:
@@ -23466,9 +23442,7 @@ We'll configure Redis separately.
 Step 30 — Deploy the worker
 
 Your worker command is:
-
 npm run worker:tasks
-
 Production architecture:
 
 Render API
@@ -23480,25 +23454,19 @@ Background Worker
 Then creating a task should create a queue job.
 
 PHASE 9 — Deploy frontend
+
 Step 31 — Connect frontend to Vercel
-
 Use the same GitHub repository.
-
 Root Directory:
-
 task-manager-frontend
+
 Step 32 — Production frontend API variable
-
 Vercel gets:
-
 NEXT_PUBLIC_API_URL=https://YOUR-RENDER-URL/api/v1
-
 Do not put the production value directly into GitHub.
 
 Step 33 — Final production CORS
-
 Backend should allow your actual Vercel frontend URL.
-
 Example flow:
 
 Vercel
@@ -23506,8 +23474,8 @@ Vercel
 CORS
    ↓
 Render
-Step 34 — Test production cookies
 
+Step 34 — Test production cookies
 Test from the real frontend:
 
 signup
@@ -23545,12 +23513,11 @@ At this point Deployment / Production is complete:
 ✅ Production errors
 ✅ Logs
 ✅ Frontend/backend URLs
-PHASE 10 — Continuous Integration
 
+PHASE 10 — Continuous Integration
 Only now do we create real CI.
 
 Step 35 — Create GitHub Actions workflow
-
 Inside main folder:
 
 complete-task-manager-course/
@@ -23589,8 +23556,8 @@ Important:
 npm ci ≠ CI
 
 npm ci = one COMMAND
-
 GitHub Actions workflow = actual CI
+
 PHASE 11 — Practice CI failure
 Step 36 — Intentionally make a test fail
 change code
@@ -23606,9 +23573,7 @@ GitHub Actions
 ❌ CI FAILED
 
 Look at the GitHub Actions logs.
-
 Fix the error.
-
 Push again:
 
 git push
@@ -23618,7 +23583,6 @@ GitHub Actions
 ✅ CI PASSED
 
 Now you truly understand:
-
 Continuous Integration = automatically installing, testing and checking new code when it is pushed.
 
 PHASE 12 — Continuous Deployment
@@ -23647,66 +23611,1042 @@ Render / Vercel
 Production deployment
 
 Now:
-
 CD = automatically deploy good code after the checks succeed.
 
-FINAL DAY 14 ROADMAP
+// -==============================================
+// // we will move to Deployment and Production make it short
+Deployment / Production + CI/CD
+PART 1 — Finish Production
+Step 1 — Make sure backend tests pass
 
-Save this short version too:
+Open:
+complete-task-manager-course/task-manager-api
+Run:
+npm test
 
-1. Project folders ✅
-2. .gitignore ✅
-3. package-lock ✅
-4. npm ci ✅
+You want:
+Test Suites: PASS
+Tests: PASS
+If they already pass, do not spend more time here.
+Your lesson says tests should be passing before moving into production/CI.
 
-5. Fix Jest /api → /api/v1       ← YOU ARE HERE
-6. Fix Redis during tests
-7. npm test → PASS
+Step 2 — Check frontend
+Open:
+complete-task-manager-course/task-manager-frontend
+Run:
+npm run lint
+Then:
+npm run build
+You want:
+lint ✅
+build ✅
+Your frontend currently doesn't have automated tests, so for your project these two checks are enough.
 
-8. Fix upload middleware
-9. Fix production CORS
-10. Fix production cookies
-11. Fix frontend API URL
-12. Fix Swagger URL
-13. Fix production errors/logging
+Human translation
+Backend:
+Does my code behave correctly?
+→ npm test
 
-14. Test backend locally
-15. Test frontend locally
+Frontend:
+Does my code have obvious problems?
+→ npm run lint
+Can Next.js successfully create a production version?
+→ npm run build
 
-16. Check/remove nested Git repositories
-17. git init from parent folder
-18. git add
-19. git commit
-20. Create GitHub repository
-21. git push
+more explain:
+They check different things.
 
-22. Create Render service
-23. Root Directory = task-manager-api
-24. Build = npm ci
-25. Start = npm start
-26. Add production env variables
-27. Connect MongoDB Atlas
-28. Deploy backend
-29. Test HTTPS/API/errors/logs
+For your project:
 
-30. Configure production Redis
-31. Deploy BullMQ worker
+Backend  → npm test
+Frontend → npm run lint
+Frontend → npm run build
+Backend: npm test
 
-32. Deploy frontend to Vercel
-33. Add production frontend API URL
-34. Test CORS + cookies + complete app
+This asks:
 
-35. Create GitHub Actions CI
-36. npm ci backend
-37. npm test
-38. npm ci frontend
-39. npm run build
-40. Make CI fail intentionally
-41. Fix → CI PASS
+“Does my backend logic actually work?”
 
-42. Configure CD
-43. Push code
-44. CI passes
-45. Automatic production deployment ✅
+For example, your Jest tests may check:
 
-Your exact next task is Step 5: update the Jest routes from /api/... to /api/v1/.... After that, we fix Redis during tests, then run npm test again.
+signup works
+login works
+create task works
+update task works
+delete task works
+protected routes work
+
+So:
+
+npm test
+
+means:
+
+Run my automated backend tests
+
+If they pass:
+
+Backend behavior looks correct ✅
+Frontend: npm run lint
+
+This asks:
+
+“Does my frontend code have coding problems?”
+
+Lint checks things like:
+
+bad syntax
+unused variables
+incorrect React/Next patterns
+possible mistakes
+
+Example:
+
+const name = "Adam";
+
+If name is never used, ESLint may warn you.
+
+So:
+
+npm run lint
+
+means:
+
+Check my frontend code quality
+
+It does not prove the website works.
+
+Frontend: npm run build
+
+This asks:
+
+“Can Next.js successfully create the production version of my app?”
+
+You may have code that works in:
+
+npm run dev
+
+but fails when creating a real production build.
+
+So:
+
+npm run build
+
+tests whether Next.js can turn your source code into a deployable production application.
+
+Think:
+
+My code
+   ↓
+npm run build
+   ↓
+Production-ready Next.js files
+
+If it fails, there may be problems such as:
+
+import errors
+Next.js errors
+TypeScript/build errors
+missing environment variables
+server/client component problems
+The easiest way to remember
+npm test
+= Does my BACKEND behave correctly?
+
+npm run lint
+= Does my FRONTEND code look correct?
+
+npm run build
+= Can my FRONTEND become a production app?
+
+Why do we run all three before CI?
+
+Because later GitHub Actions will do the same checks automatically:
+
+git push
+   ↓
+Backend test
+   ↓
+Frontend lint
+   ↓
+Frontend build
+   ↓
+PASS ✅ or FAIL ❌
+
+So right now you are simply checking locally first, before asking GitHub to check it for you.
+//=============================
+Step 3 — Understand Production CORS
+You already know CORS basics.
+Today you only need to understand the production difference.
+Locally:
+Frontend
+http://localhost:3001
+        ↓
+Backend
+http://localhost:3000
+
+Production:
+Vercel frontend
+https://my-app.vercel.app
+        ↓
+Render backend
+https://my-api.onrender.com
+
+Your backend needs to know which frontend is allowed.
+
+Instead of this:
+origin: [
+  "http://localhost:3001",
+  "https://old-vercel-url.vercel.app",
+]
+
+use an environment variable:
+const allowedOrigins = [
+  "http://localhost:3001",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(
+        new Error("Not allowed by CORS")
+      );
+    },
+
+    credentials: true,
+  })
+);
+
+This is already part of your lesson.
+What do you need to remember?
+Just this:
+
+CORS =
+Which frontend is allowed
+to communicate with my backend?
+
+And:
+
+credentials: true
+
+is important when cookies are involved.
+✅ CORS finished.
+//================
+Step 4 — Understand Production Cookies
+You don't need a giant cookie lesson.
+Remember these three:
+
+httpOnly
+secure
+sameSite
+httpOnly
+httpOnly: true
+
+Meaning:
+Browser JavaScript cannot directly read this cookie.
+Good for authentication cookies.
+secure
+Development:
+secure: false
+Production:
+secure: true
+Meaning:
+Send this cookie over HTTPS.
+A common pattern is:
+const isProduction =
+  process.env.NODE_ENV === "production";
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: isProduction
+    ? "none"
+    : "lax",
+};
+
+Your lesson specifically identifies httpOnly, secure, and sameSite as the production-cookie concepts you need.
+
+Human translation
+
+Production cookies:
+
+Frontend on Vercel
+       ↓
+Cookie
+       ↓
+Backend on Render
+
+The browser is stricter because these are different sites.
+
+Remember:
+
+httpOnly → security
+secure   → HTTPS
+sameSite → cross-site cookie rules
+
+✅ Production cookies finished.
+//=======================================
+Step 5 — Frontend API URL
+Locally your frontend might call:
+http://localhost:3000/api/v1
+
+But after deployment it calls something like:
+https://my-task-api.onrender.com/api/v1
+
+Don't write the production URL everywhere in your React/Next.js code.
+Use:
+NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1
+
+Locally.
+Production might have:
+NEXT_PUBLIC_API_URL=https://my-api.onrender.com/api/v1
+stored in Vercel.
+
+Then your frontend uses:
+process.env.NEXT_PUBLIC_API_URL
+Remember
+Development URL
+≠
+Production URL
+
+Therefore:
+environment variable
+This matches your lesson's frontend/backend URL section.
+✅ Frontend/backend URLs finished.
+// //=======================================
+Step 6 — Swagger production URL
+Same exact idea.
+Bad:
+servers: [
+  {
+    url: "http://localhost:3000/api/v1",
+  },
+]
+
+Better:
+const API_BASE_URL =
+  process.env.BACKEND_URL ||
+  "http://localhost:3000";
+Then:
+servers: [
+  {
+    url: `${API_BASE_URL}/api/v1`,
+  },
+]
+
+Local:
+BACKEND_URL missing
+↓
+localhost
+
+Production:
+BACKEND_URL=
+https://my-api.onrender.com
+↓
+Swagger uses Render
+
+That's the change described in your lesson.
+Do you need to memorize Swagger code?
+No.
+Remember:
+Don't hard-code production URLs. Use environment variables.
+✅ Swagger finished.
+// ==================================
+Step 7 — Production Errors
+This one is important.
+Imagine your database crashes with:
+MongoServerError:
+authentication failed...
+
+In development, seeing that is useful.
+But you don't want your API sending internal details to users.
+Development:
+500
+MongoServerError: ...
+
+Production:
+{
+  "status": "error",
+  "message": "Something went wrong"
+}
+
+Your lesson uses this idea:
+if (
+  process.env.NODE_ENV === "production" &&
+  err.statusCode >= 500
+) {
+  return res.status(500).json({
+    status: "error",
+    message: "Something went wrong",
+  });
+}
+
+But don't hide normal errors
+These can still be useful:
+
+400 → Validation failed
+401 → Not logged in
+404 → Task not found
+
+The important distinction:
+User sees:
+"Something went wrong"
+
+Developer logs:
+REAL ERROR
+✅ Production error handling finished.
+//==============================
+Step 8 — Logs
+You already use Pino.
+You only need to know:
+info
+warn
+error
+fatal
+
+For example:
+
+logger.info("Server started");
+logger.warn("Something unusual happened");
+logger.error(error);
+
+Locally:
+Terminal
+
+Production:
+Render
+→ your service
+→ Logs
+
+You already know how to open Render logs, so don't practice it again.
+Your lesson confirms that production logging is mainly about verifying requests, warnings and errors in Render.
+✅ Logging finished.
+//================================
+Step 9 — HTTPS
+This one is extremely easy.
+Local:
+http://localhost:3000
+
+Production:
+https://my-api.onrender.com
+
+https means the connection between client and server is encrypted.
+You don't need to manually install an SSL certificate for your Render/Vercel practice setup.
+
+Remember:
+HTTP  → normal connection
+HTTPS → encrypted connection
+And production cookies commonly use:
+secure: true
+Your lesson identifies the Render production endpoint as HTTPS.
+✅ HTTPS finished.
+//====================================
+Step 10 — MongoDB Atlas production connection
+You already used Atlas.
+Just understand:
+
+Express running on Render
+           ↓
+    DATABASE_URL
+           ↓
+     MongoDB Atlas
+
+Locally:
+DATABASE_URL=...
+comes from your:
+.env
+Production:
+DATABASE_URL=...
+comes from:
+Render Environment Variables
+Same variable.
+Different place.
+Your lesson describes exactly that architecture.
+✅ Database connection finished.
+//==============================
+Step 11 — Redis/BullMQ in production
+Do not deploy this again today.
+Just understand one thing.
+Locally:
+REDIS_HOST=127.0.0.1
+means:
+Redis is running on MY COMPUTER.
+If Express runs on Render:
+Render cannot connect to Redis
+on your Windows computer using
+127.0.0.1
+
+You would need:
+
+Express
+   ↓
+Hosted Redis
+   ↓
+BullMQ
+   ↓
+Worker
+
+Your lesson makes this exact distinction.
+That's enough for your level.
+✅ Production Redis concept finished.
+STOP HERE: Deployment / Production is DONE
+
+You now understand:
+
+✅ Deploy Express
+✅ MongoDB Atlas
+✅ Environment variables
+✅ Production CORS
+✅ Production cookies
+✅ HTTPS
+✅ Database connection
+✅ Production errors
+✅ Logs
+✅ Frontend/backend URLs
+✅ Redis production concept
+
+You do not need another Render deployment.
+Now move to the actual new subject.
+//================================================
+PART 2 — CI
+Step 12 — Understand CI before writing code
+CI = Continuous Integration.
+Without CI:
+
+You write code
+     ↓
+git push
+     ↓
+Maybe code works?
+Maybe tests pass?
+🤷
+
+With CI:
+
+You write code
+     ↓
+git push
+     ↓
+GitHub Actions
+     ↓
+install dependencies
+     ↓
+run tests
+     ↓
+build project
+     ↓
+✅ PASS
+or
+❌ FAIL
+Human translation
+
+CI is basically:
+"GitHub, whenever I push code, check my project for me."
+That's it.
+//================================
+Step 13 — Create GitHub Actions folder
+Your structure should become:
+complete-task-manager-course/
+
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── task-manager-api/
+│
+└── task-manager-frontend/
+
+The workflow belongs in:
+
+.github/workflows/ci.yml
+
+Not inside backend.
+Not inside frontend.
+Your lesson specifies the same structure.
+//=============================================
+Step 14 — Create ci.yml
+Create:
+.github/workflows/ci.yml
+Put this in it:
+
+name: Task Manager CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  backend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: task-manager-api
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "20.x"
+          cache: npm
+          cache-dependency-path: task-manager-api/package-lock.json
+
+      - name: Install backend dependencies
+        run: npm ci
+
+      - name: Run backend tests
+        run: npm test
+
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: task-manager-frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "20.x"
+          cache: npm
+          cache-dependency-path: task-manager-frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Run frontend lint
+        run: npm run lint
+
+      - name: Build frontend
+        run: npm run build
+
+GitHub's current documentation recommends setup-node for controlling the Node version and shows npm ci, build and test commands in Node.js CI workflows. It also supports setting a job's working-directory, which is useful because your backend and frontend live in separate folders.
+//=======================
+Step 15 — Understand the file
+Don't memorize YAML.
+Understand this:
+name: Task Manager CI
+means:
+Name shown in GitHub Actions.
+This:
+on:
+  push:
+means:
+Run when I push.
+This:
+branches:
+  - main
+
+means:
+
+Only when code goes to main.
+
+This:
+
+jobs:
+
+means:
+
+Work GitHub should perform.
+
+You have:
+
+backend job
+frontend job
+
+This:
+
+runs-on: ubuntu-latest
+
+means:
+
+GitHub temporarily gives us a Linux computer.
+
+Your project gets tested on that machine.
+
+This:
+
+uses: actions/checkout@v6
+
+means:
+
+Put my GitHub code onto that temporary computer.
+
+This:
+
+uses: actions/setup-node@v7
+
+means:
+
+Install/configure Node.
+
+This:
+
+run: npm ci
+
+means:
+
+Install dependencies from package-lock.json.
+
+Then:
+
+run: npm test
+
+means:
+
+Test backend.
+
+And:
+
+run: npm run build
+
+means:
+
+Make sure frontend can successfully build.
+
+That's CI.
+//=============================
+Step 16 — Important: CI does NOT have your .env
+Remember:
+.env ❌ GitHub
+That's correct.
+
+But it creates something important:
+YOUR COMPUTER
+.env exists
+↓
+npm test works
+
+GITHUB ACTIONS
+
+.env DOES NOT exist
+↓
+tests may need variables
+So first run your CI.
+Don't add random secrets before you need them.
+If GitHub Actions fails with something like:
+JWT_SECRET is undefined
+or:
+DATABASE_URL missing
+then you need GitHub Actions secrets for whatever your tests genuinely require.
+
+Typical location:
+GitHub repository
+
+Settings
+↓
+Secrets and variables
+↓
+Actions
+
+Then your workflow can use:
+
+env:
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+But don't add this yet unless your workflow tells us it is necessary.
+//=================================
+Step 17 — Commit the workflow
+From:
+complete-task-manager-course
+run:
+git status
+You should see something involving:
+.github/workflows/ci.yml
+Then:
+git add .
+Then:
+git commit -m "Add GitHub Actions CI"
+Then:
+git push
+//===========================
+Step 18 — Watch GitHub Actions
+
+Open your repository on GitHub.
+
+Click:
+
+Actions
+
+You should see something like:
+
+Task Manager CI
+
+Then you'll see:
+
+backend
+frontend
+
+Possible result:
+
+backend  ✅
+frontend ✅
+
+Congratulations.
+
+That means:
+
+CI PASS
+Step 19 — If CI fails
+
+Do NOT panic.
+
+A red ❌ is actually useful.
+
+Click the failed job.
+
+Example:
+
+backend ❌
+
+Then click the failing step:
+
+Run backend tests
+
+You might see:
+
+Expected: 200
+Received: 404
+
+CI just told you:
+
+Something in your project doesn't work.
+
+Fix it locally.
+
+Then:
+
+git add .
+git commit -m "Fix failing test"
+git push
+
+CI automatically runs again.
+
+Step 20 — Intentionally make CI fail
+
+This is the most valuable exercise.
+
+Take one passing Jest test.
+
+For example, if it says:
+
+expect(response.statusCode).toBe(200);
+
+temporarily change it to something obviously wrong:
+
+expect(response.statusCode).toBe(999);
+
+Then:
+
+git add .
+git commit -m "Practice CI failure"
+git push
+
+Go to:
+
+GitHub
+→ Actions
+
+You should get:
+
+backend ❌
+
+Excellent.
+
+That is what you WANT for practice.
+
+Your lesson explicitly includes making CI fail and then fixing it so you understand the workflow.
+
+Step 21 — Fix the test
+
+Put it back:
+
+expect(response.statusCode).toBe(200);
+
+Then:
+
+git add .
+git commit -m "Fix CI test"
+git push
+
+GitHub:
+
+Actions
+
+backend ✅
+frontend ✅
+
+Now you understand CI.
+
+Memorize only this
+git push
+   ↓
+GitHub Actions
+   ↓
+npm ci
+   ↓
+test
+   ↓
+build
+   ↓
+✅ / ❌
+
+✅ CI finished.
+
+PART 3 — CD
+
+This is much easier now.
+
+Step 22 — Understand CI vs CD
+CI
+Continuous Integration
+
+means:
+
+Automatically CHECK my code.
+
+Push
+↓
+Install
+↓
+Test
+↓
+Build
+↓
+PASS / FAIL
+CD
+Continuous Deployment
+
+means:
+
+Automatically DEPLOY good code.
+
+Full flow:
+
+YOU
+ ↓
+git push
+ ↓
+GitHub
+ ↓
+GitHub Actions
+ ↓
+npm ci
+ ↓
+tests
+ ↓
+build
+ ↓
+✅ PASS
+ ↓
+deployment
+ ↓
+Render / Vercel
+ ↓
+Production
+
+Your lesson uses this same final workflow.
+
+Step 23 — Why you've already partly experienced CD
+
+When you previously connected Render/Vercel to GitHub and they automatically redeployed after a push, you were already seeing a form of automatic deployment.
+
+Before:
+
+Change code
+↓
+manually upload/deploy
+
+With CD:
+
+Change code
+↓
+push
+↓
+deployment happens automatically
+
+For your current strong-junior level, you do not need to build some huge custom deployment pipeline.
+
+Know the professional flow:
+
+CI checks code
+
+THEN
+
+CD deploys good code
+
+✅ CD concept finished.
+
+Your final Week 3 checklist
+
+At the end of today, you should be able to explain these without looking:
+
+DEPLOYMENT / PRODUCTION
+
+✅ Express deployment
+✅ MongoDB Atlas
+✅ Environment variables
+✅ Production CORS
+✅ Production cookies
+✅ HTTPS
+✅ Database connection
+✅ Production errors
+✅ Logs
+✅ Frontend/backend URLs
+✅ Basic production Redis understanding
+
+
+CI/CD
+
+✅ What CI means
+✅ .github/workflows/ci.yml
+✅ GitHub Actions
+✅ checkout
+✅ setup Node
+✅ npm ci
+✅ npm test
+✅ npm run lint
+✅ npm run build
+✅ CI PASS
+✅ CI FAIL
+✅ Read Actions logs
+✅ Fix and push again
+✅ What CD means
+✅ CI vs CD
+
+One final distinction worth memorizing:
+
+npm ci
+= npm command
+
+CI
+= Continuous Integration
+
+CI uses npm ci,
+but npm ci is NOT CI.
+
+That distinction was one of the key points in your original lesson.
+
+Start with Steps 1–2 now: run npm test in the backend, then npm run lint and npm run build in the frontend. After those pass, create the ci.yml above.
