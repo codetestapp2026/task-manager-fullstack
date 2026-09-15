@@ -24383,17 +24383,11 @@ Then:
 git push
 //===========================
 Step 18 — Watch GitHub Actions
-
 Open your repository on GitHub.
-
 Click:
-
 Actions
-
 You should see something like:
-
 Task Manager CI
-
 Then you'll see:
 
 backend
@@ -24405,35 +24399,24 @@ backend  ✅
 frontend ✅
 
 Congratulations.
-
 That means:
-
 CI PASS
+//==========================================
 Step 19 — If CI fails
-
 Do NOT panic.
-
 A red ❌ is actually useful.
-
 Click the failed job.
-
 Example:
-
 backend ❌
-
 Then click the failing step:
-
 Run backend tests
-
 You might see:
 
 Expected: 200
 Received: 404
 
 CI just told you:
-
 Something in your project doesn't work.
-
 Fix it locally.
 
 Then:

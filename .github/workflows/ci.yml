@@ -10,13 +10,16 @@ on:
       - main
 
 jobs:
-
   backend:
     runs-on: ubuntu-latest
 
     defaults:
       run:
         working-directory: task-manager-api
+
+    env:
+           NODE_ENV: test
+           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Checkout code
@@ -34,7 +37,6 @@ jobs:
 
       - name: Run backend tests
         run: npm test
-
 
   frontend:
     runs-on: ubuntu-latest
