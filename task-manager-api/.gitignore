@@ -6,4 +6,7 @@ npm-debug.log*
 .DS_Store
 completeLesson.js
 lesson-steps.js
-old-taskController
+old-taskController.js
+learnFeatures.js
+lesson-steps.js
+
